@@ -3,10 +3,12 @@ package com.newsapp.activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,13 +40,16 @@ public class NewsActivity extends AppCompatActivity{
     // Recycler View components
     private RecyclerView mRecyclerView;
     NewsAdapter newsAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        myToolbar.setLogo(R.drawable.nwslogo);
 
         setupTheView();
 
@@ -88,8 +93,6 @@ public class NewsActivity extends AppCompatActivity{
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 Log.e("ERROR", "res=" + res + " statusCode=" + statusCode + " message=" + t.getMessage());
             }
-
-
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
@@ -137,16 +140,33 @@ public class NewsActivity extends AppCompatActivity{
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+//        switch (item.getItemId()) {
+//            // This is the up button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                // overridePendingTransition(R.animator.anim_left, R.animator.anim_right);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+
+
         switch (item.getItemId()) {
-            // This is the up button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                // overridePendingTransition(R.animator.anim_left, R.animator.anim_right);
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            case R.id.action_filter:
 
+
+                return true;
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     private List<News> parseTheResponse(String responseString){

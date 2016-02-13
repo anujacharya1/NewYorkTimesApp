@@ -102,14 +102,14 @@ public class NewsAdapter extends
     private void configureViewHolder1(ViewHolderText vh1, int position) {
         News news = newsList.get(position);
         if (news != null) {
-            vh1.getLabel1().setText(news.getLeadParagraph());
+            vh1.getLabel1().setText(news.getHeadline().getMain());
         }
     }
 
     private void configureViewHolder2(ViewHolderImgText vh2, int position) {
         News news = newsList.get(position);
 
-        vh2.getTextView().setText(news.getLeadParagraph());
+        vh2.getTextView().setText(news.getHeadline().getMain());
 
         List<Multimedia> multimedias = news.getMultimedia();
 
