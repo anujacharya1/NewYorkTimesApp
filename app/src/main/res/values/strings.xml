@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">NewsApp</string>
     <string name="search">search</string>
+    <string name="date">Date</string>
+    <string name="Sort">Sort</string>
+    <string name="Category">Category</string>
+    <string name="Arts">Arts</string>
+    <string name="fashion"><![CDATA[Fashion & Style]]></string>
+    <string name="sports">Sports</string>
+    <string name="date_from">Date From</string>
+    <string name="date_to">Date To</string>
+    <string name="save">SAVE</string>
 </resources>

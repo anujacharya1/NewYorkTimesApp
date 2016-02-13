@@ -1,9 +1,11 @@
 package com.newsapp.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.newsapp.adapter.EndlessRecyclerViewScrollListener;
 import com.newsapp.adapter.NewsAdapter;
+import com.newsapp.dialogs.FilterDialog;
 import com.newsapp.impl.NewYorkTimesImpl;
 import com.newsapp.model.News;
 import com.newsapp.R;
@@ -50,7 +54,7 @@ public class NewsActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
 
         myToolbar.setLogo(R.drawable.nwslogo);
-
+        myToolbar.setBackgroundColor(getResources().getColor(R.color.colorGrey));
         setupTheView();
 
     }
@@ -156,6 +160,12 @@ public class NewsActivity extends AppCompatActivity{
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_filter:
+
+                //show the dialog framgment
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction ft = manager.beginTransaction();
+                DialogFragment newFragment = FilterDialog.newInstance();
+                newFragment.show(ft, "FILTER_DIALOG");
 
 
                 return true;

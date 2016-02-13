@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="50dp"
+    android:layout_height="match_parent">
+
+
+    <!-- DATE FROM -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/date_from"
+        android:gravity="center_vertical"
+        android:id="@+id/date_from"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:layout_alignParentRight="false"
+        android:layout_marginRight="10dp" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_date_from"
+        android:text="@string/date_from"
+        android:layout_alignTop="@+id/date_from"
+        android:layout_toRightOf="@+id/date_from"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <!-- DATE TO -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/date_to"
+        android:gravity="center_vertical"
+        android:id="@+id/date_to"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:layout_below="@+id/date_from"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/date_from"
+        android:layout_alignEnd="@+id/date_from"
+        android:layout_marginTop="30dp" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_date_to"
+        android:text="@string/date_to"
+        android:layout_alignRight="@+id/et_date_from"
+        android:layout_alignBottom="@+id/date_to"
+        android:layout_toRightOf="@+id/date_from"
+        android:layout_alignEnd="@+id/et_date_from" />
+
+    <!-- SORT SPINNER -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/Sort"
+        android:id="@+id/sort_txt"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/date_to"
+        android:layout_alignRight="@+id/date_to"
+        android:layout_alignEnd="@+id/date_to"
+        android:layout_marginTop="30dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:spinnerMode="dropdown"
+        android:layout_alignTop="@+id/sort_txt"
+        android:layout_alignLeft="@+id/et_date_to"
+        android:layout_alignStart="@+id/et_date_to" />
+
+
+    <!-- CHECK BOX -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/Category"
+        android:id="@+id/category_txt"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sort_txt"
+        android:layout_alignRight="@+id/sort_txt"
+        android:layout_alignEnd="@+id/sort_txt"
+        android:layout_marginTop="30dp" />
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Arts"
+        android:id="@+id/cb_arts"
+        android:checked="true"
+        android:layout_alignTop="@+id/category_txt"
+        android:layout_alignLeft="@+id/spinner"
+        android:layout_alignStart="@+id/spinner" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fashion"
+        android:id="@+id/cb_fashion"
+        android:layout_below="@+id/cb_arts"
+        android:layout_alignLeft="@+id/cb_arts"
+        android:layout_alignStart="@+id/cb_arts"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sports"
+        android:id="@+id/cb_sport"
+        android:layout_below="@+id/cb_fashion"
+        android:layout_alignLeft="@+id/cb_fashion"
+        android:layout_alignStart="@+id/cb_fashion"
+        android:checked="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--
+
+
+
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Arts"
+        android:id="@+id/checkBox"
+        android:checked="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fashion"
+        android:id="@+id/checkBox2"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignLeft="@+id/checkBox"
+        android:layout_alignStart="@+id/checkBox"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sports"
+        android:id="@+id/checkBox3"
+        android:layout_below="@+id/checkBox2"
+        android:layout_alignLeft="@+id/checkBox2"
+        android:layout_alignStart="@+id/checkBox2"
+        android:checked="false" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/et_date_to"
+        android:layout_toRightOf="@+id/date_from"
+        android:layout_toEndOf="@+id/date_from" />
+
+-->
+
+
+</RelativeLayout>
