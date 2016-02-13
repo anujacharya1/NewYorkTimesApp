@@ -81,6 +81,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:spinnerMode="dropdown"
+        android:entries="@array/sort_arrays"
+        android:prompt="@string/sort_prompt"
         android:layout_alignTop="@+id/sort_txt"
         android:layout_alignLeft="@+id/et_date_to"
         android:layout_alignStart="@+id/et_date_to" />

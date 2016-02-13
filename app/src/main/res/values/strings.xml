@@ -10,4 +10,12 @@
     <string name="date_from">Date From</string>
     <string name="date_to">Date To</string>
     <string name="save">SAVE</string>
+
+
+    <string name="sort_prompt">Sort Order</string>
+
+    <string-array name="sort_arrays">
+        <item>Oldest</item>
+        <item>Newest</item>
+    </string-array>
 </resources>
