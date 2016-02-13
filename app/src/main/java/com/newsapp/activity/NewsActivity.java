@@ -177,10 +177,10 @@ public class NewsActivity extends AppCompatActivity{
                         }
 
                         if(!filterDialogResponse.getDateFrom().isEmpty()){
-                            filter.setDateFrom(NewsAppUtil.getTheDate(filterDialogResponse.getDateFrom()));
+                            filter.setDateFrom(filterDialogResponse.getDateFrom());
                         }
                         if(!filterDialogResponse.getDateTo().isEmpty()){
-                            filter.setDateTo(NewsAppUtil.getTheDate(filterDialogResponse.getDateTo()));
+                            filter.setDateTo(filterDialogResponse.getDateTo());
                         }
                         filter.setCategories(filterDialogResponse.getCategories());
                         filter.setSort(filterDialogResponse.getSort());

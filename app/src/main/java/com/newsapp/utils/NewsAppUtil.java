@@ -24,25 +24,25 @@ public class NewsAppUtil {
             Calendar myCal = new GregorianCalendar();
             myCal.setTime(fromDate);
 
-            int day = myCal.get(Calendar.DAY_OF_MONTH);
-            String dayStr = new String();
-
-            if(day <10){
-                dayStr = "0"+day;
-            }
-
             int month = myCal.get(Calendar.MONTH) + 1;
-            String monthStr = new String();
+            int day = myCal.get(Calendar.DAY_OF_MONTH);
 
-            if(month <10){
-                monthStr = "0"+month;
+            if(month<10){
+                String monthStr = "0"+month;
+                dateResponse.append(monthStr);
             }
             else{
-                monthStr = String.valueOf(month);
+                dateResponse.append(month);
+            }
+
+            if(day<10){
+                String dayStr = "0"+day;
+                dateResponse.append(dayStr);
+            }
+            else{
+                dateResponse.append(day);
             }
             dateResponse.append(myCal.get(Calendar.YEAR));
-            dateResponse.append(monthStr);
-            dateResponse.append(dayStr);
 
 
         } catch (ParseException e) {

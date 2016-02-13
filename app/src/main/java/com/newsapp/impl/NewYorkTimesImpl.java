@@ -7,11 +7,20 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.newsapp.interfaces.NewYorkTimes;
 import com.newsapp.model.Filter;
+import com.newsapp.utils.NewsAppUtil;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by anujacharya on 2/8/16.
  */
 public class NewYorkTimesImpl implements NewYorkTimes {
+
 
     @Override
     public void articleSearch(Filter filter, Integer page, TextHttpResponseHandler textHttpResponseHandler) {
@@ -34,10 +43,12 @@ public class NewYorkTimesImpl implements NewYorkTimes {
                 requestParams.put("fq=section_name.contains:", android.text.TextUtils.join(",", filter.getCategories()));
             }
             if(filter.getDateFrom()!=null && !filter.getDateFrom().isEmpty()){
-                requestParams.put("begin_date", filter.getDateFrom());
+                String newYorkTimesDate = NewsAppUtil.getTheDate(filter.getDateFrom());
+                requestParams.put("begin_date", newYorkTimesDate);
             }
             if(filter.getDateTo()!=null && !filter.getDateTo().isEmpty()){
-                requestParams.put("end_date",filter.getDateTo());
+                String newYorkTimesDate = NewsAppUtil.getTheDate(filter.getDateTo());
+                requestParams.put("end_date",newYorkTimesDate);
             }
             if(filter.getSort()!=null && !filter.getSort().isEmpty()){
                 requestParams.put("sort",filter.getSort());
