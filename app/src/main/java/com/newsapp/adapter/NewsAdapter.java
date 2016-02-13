@@ -42,7 +42,7 @@ public class NewsAdapter extends
 
         Multimedia thumbnail = null;
         for(Multimedia m : multimedias){
-            if(m.getSubtype().equalsIgnoreCase("wide")){
+            if(m.getSubtype()!=null && m.getSubtype().equalsIgnoreCase("wide")){
                 thumbnail = m;
                 break;
             }

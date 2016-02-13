@@ -46,7 +46,6 @@ public class NewsActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     NewsAdapter newsAdapter;
 
-
     //store the value on this for filtering the result
     // this are the default and will be overriden by the dialog framgment
     private Filter filter;
@@ -200,15 +199,12 @@ public class NewsActivity extends AppCompatActivity{
 
                 newFragment.show(ft, "FILTER_DIALOG");
 
-
                 return true;
-
 
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -227,28 +223,5 @@ public class NewsActivity extends AppCompatActivity{
         List<News> newsList =  gson.fromJson(docs, newsType);
         return newsList;
     }
-
-
-
-//    private void callApi(Filter filter) {
-//
-//        new NewYorkTimesImpl().articleSearch(filter, 0, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-//                Log.e("ERROR", "res=" + res + " statusCode=" + statusCode + " message=" + t.getMessage());
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                List<News> newsListLocal = parseTheResponse(responseString);
-//
-//                for(int i=0 ; i<newsListLocal.size(); i++){
-//                    newsList.add(i, newsListLocal.get(i));
-//                    newsAdapter.notifyItemInserted(i);
-//                }
-//
-//            }
-//        });
-//    }
 
 }

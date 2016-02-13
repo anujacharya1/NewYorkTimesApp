@@ -3,7 +3,6 @@ package com.newsapp.dialogs;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -240,8 +239,6 @@ public class FilterDialog extends DialogFragment {
                 String dateFrom = date_from.getText().toString();
 
                 //set the default value to the current date and time
-
-                Log.i(TAG, "++++++++++++++dateFrom=" + dateFrom);
                 String dateTo = date_to.getText().toString();
 
                 Filter filter = new Filter();
