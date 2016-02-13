@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.newsapp.R;
 
@@ -26,8 +29,10 @@ public class FilterDialog extends DialogFragment {
 
     private EditText date_from;
     private EditText date_to;
+    private Spinner sortSpinner;
 
 
+    private String sortOrder;
     public static String TAG = "FILTER_DIALOG";
 
     public FilterDialog(){
@@ -102,6 +107,24 @@ public class FilterDialog extends DialogFragment {
         });
     }
 
+    private void setSortSpinner(final View filterView){
+        sortSpinner = (Spinner) filterView.findViewById(R.id.sort_spinner);
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //setting the value in the private variables
+                sortOrder = String.valueOf(sortSpinner.getSelectedItem());
+//                        Toast.makeText(view.getContext(), String.valueOf(sortSpinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setRetainInstance(true);
@@ -111,7 +134,7 @@ public class FilterDialog extends DialogFragment {
 
         setTheDateFrom(filterView);
         setTheDateTo(filterView);
-
+        setSortSpinner(filterView);
 
         return filterView;
     }

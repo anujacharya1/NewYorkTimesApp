@@ -79,7 +79,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/sort_spinner"
         android:spinnerMode="dropdown"
         android:entries="@array/sort_arrays"
         android:prompt="@string/sort_prompt"
@@ -112,8 +112,8 @@
         android:id="@+id/cb_arts"
         android:checked="true"
         android:layout_alignTop="@+id/category_txt"
-        android:layout_alignLeft="@+id/spinner"
-        android:layout_alignStart="@+id/spinner" />
+        android:layout_alignLeft="@+id/sort_spinner"
+        android:layout_alignStart="@+id/sort_spinner" />
 
     <CheckBox
         android:layout_width="wrap_content"
