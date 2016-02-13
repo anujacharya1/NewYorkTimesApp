@@ -9,8 +9,9 @@ public class Filter {
 
     String dateFrom;
     String dateTo;
-    Boolean sortNewest;
+    String sort;
     List<String> categories;
+    String query;
 
     public String getDateFrom() {
         return dateFrom;
@@ -28,12 +29,12 @@ public class Filter {
         this.dateTo = dateTo;
     }
 
-    public Boolean getSortNewest() {
-        return sortNewest;
+    public String getSort() {
+        return sort;
     }
 
-    public void setSortNewest(Boolean sortNewest) {
-        this.sortNewest = sortNewest;
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
     public List<String> getCategories() {
@@ -44,13 +45,22 @@ public class Filter {
         this.categories = categories;
     }
 
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
     @Override
     public String toString() {
         return "Filter{" +
                 "dateFrom='" + dateFrom + '\'' +
                 ", dateTo='" + dateTo + '\'' +
-                ", sortNewest=" + sortNewest +
+                ", sort='" + sort + '\'' +
                 ", categories=" + categories +
+                ", query='" + query + '\'' +
                 '}';
     }
 }

@@ -14,12 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -36,6 +33,7 @@ import com.newsapp.impl.NewYorkTimesImpl;
 import com.newsapp.model.Filter;
 import com.newsapp.model.News;
 import com.newsapp.R;
+import com.newsapp.utils.NewsAppUtil;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -51,10 +49,9 @@ public class NewsActivity extends AppCompatActivity{
 
     //store the value on this for filtering the result
     // this are the default and will be overriden by the dialog framgment
-    String dateFrom = "";
-    String dateTo = "";
-    Boolean sortNewest = Boolean.TRUE;
-    List<String> categories = Arrays.asList();
+    private Filter filter;
+
+    private int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +64,6 @@ public class NewsActivity extends AppCompatActivity{
         myToolbar.setLogo(R.drawable.nwslogo);
         myToolbar.setBackgroundColor(getResources().getColor(R.color.colorGrey));
         setupTheView();
-
     }
 
     private void setupTheView(){
@@ -89,14 +85,12 @@ public class NewsActivity extends AppCompatActivity{
         //end less scroller
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount) {
+            public void onLoadMore(int pageList, int totalItemsCount) {
+                page = pageList;
                 customLoadMoreDataFromApi(page);
-
             }
         });
         mRecyclerView.setAdapter(newsAdapter);
-
-
     }
 
     // Append more data into the adapter
@@ -104,7 +98,7 @@ public class NewsActivity extends AppCompatActivity{
     public void customLoadMoreDataFromApi(int page) {
 
 
-        new NewYorkTimesImpl().articleSearch("sample", page, new TextHttpResponseHandler() {
+        new NewYorkTimesImpl().articleSearch(filter, page, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 Log.e("ERROR", "res=" + res + " statusCode=" + statusCode + " message=" + t.getMessage());
@@ -134,7 +128,12 @@ public class NewsActivity extends AppCompatActivity{
             public boolean onQueryTextSubmit(String query) {
                 // perform query here
 
-                callApi();
+                if (filter == null) {
+                    filter = new Filter();
+
+                }
+                filter.setQuery(query);
+                customLoadMoreDataFromApi(page);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
@@ -164,21 +163,36 @@ public class NewsActivity extends AppCompatActivity{
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction ft = manager.beginTransaction();
 
+                if(filter==null){
+                    filter = new Filter();
+                }
 
                 // get the value from the dialog
-                DialogFragment newFragment = FilterDialog.newInstance(new FilterDialog.FilterDialogListener() {
+                DialogFragment newFragment = FilterDialog.newInstance(filter, new FilterDialog.FilterDialogListener() {
                     @Override
                     public void onFinishFilterDialogDialog(Filter filterDialogResponse) {
 
-                        dateFrom = filterDialogResponse.getDateFrom();
-                        dateTo  = filterDialogResponse.getDateTo();
-                        sortNewest = filterDialogResponse.getSortNewest();
-                        categories = filterDialogResponse.getCategories();
+                        if(filter==null){
+                            filter = new Filter();
+                        }
 
-                        Log.i("INFO", "got the response form the filter dialog = "+filterDialogResponse);
+                        if(!filterDialogResponse.getDateFrom().isEmpty()){
+                            filter.setDateFrom(NewsAppUtil.getTheDate(filterDialogResponse.getDateFrom()));
+                        }
+                        if(!filterDialogResponse.getDateTo().isEmpty()){
+                            filter.setDateTo(NewsAppUtil.getTheDate(filterDialogResponse.getDateTo()));
+                        }
+                        filter.setCategories(filterDialogResponse.getCategories());
+                        filter.setSort(filterDialogResponse.getSort());
 
+                        Log.i("INFO", "onOptionsItemSelected= " + filter);
 
                         //also call the network call to refresh the content
+                        page = 0;
+
+                        //only call the api if the query is present
+                        // use case where the person is going to set the filter first without query
+                        customLoadMoreDataFromApi(page);
 
 
                     }
@@ -216,25 +230,25 @@ public class NewsActivity extends AppCompatActivity{
 
 
 
-    private void callApi() {
-
-        new NewYorkTimesImpl().articleSearch("sample", 0, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                Log.e("ERROR", "res=" + res + " statusCode=" + statusCode + " message=" + t.getMessage());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                List<News> newsListLocal = parseTheResponse(responseString);
-
-                for(int i=0 ; i<newsListLocal.size(); i++){
-                    newsList.add(i, newsListLocal.get(i));
-                    newsAdapter.notifyItemInserted(i);
-                }
-
-            }
-        });
-    }
+//    private void callApi(Filter filter) {
+//
+//        new NewYorkTimesImpl().articleSearch(filter, 0, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+//                Log.e("ERROR", "res=" + res + " statusCode=" + statusCode + " message=" + t.getMessage());
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+//                List<News> newsListLocal = parseTheResponse(responseString);
+//
+//                for(int i=0 ; i<newsListLocal.size(); i++){
+//                    newsList.add(i, newsListLocal.get(i));
+//                    newsAdapter.notifyItemInserted(i);
+//                }
+//
+//            }
+//        });
+//    }
 
 }
