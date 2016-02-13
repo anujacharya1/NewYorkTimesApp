@@ -8,18 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 
 import com.newsapp.R;
+import com.newsapp.model.Filter;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -30,21 +34,34 @@ public class FilterDialog extends DialogFragment {
     private EditText date_from;
     private EditText date_to;
     private Spinner sortSpinner;
+    private List<String> categories = new ArrayList<>();
+    Button save;
 
-
-    private String sortOrder;
+    private Boolean sortOrderNewest;
     public static String TAG = "FILTER_DIALOG";
 
-    public FilterDialog(){
+    FilterDialogListener filterDialogListener;
 
+    public FilterDialog(){
+        filterDialogListener = null;
     }
-    public static FilterDialog newInstance() {
+
+    public static FilterDialog newInstance(FilterDialogListener filterDialogListener) {
         FilterDialog frag = new FilterDialog();
         Bundle args = new Bundle();
         frag.setArguments(args);
+        frag.setFilterDialogListener(filterDialogListener);
         return frag;
     }
 
+    public interface FilterDialogListener {
+        void onFinishFilterDialogDialog(Filter filter);
+    }
+
+
+    public void setFilterDialogListener(FilterDialogListener filterDialogListener) {
+        this.filterDialogListener = filterDialogListener;
+    }
 
     private void setTheDateFrom(final View filterView){
         final Calendar myCalendar = Calendar.getInstance();
@@ -112,9 +129,14 @@ public class FilterDialog extends DialogFragment {
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 //setting the value in the private variables
-                sortOrder = String.valueOf(sortSpinner.getSelectedItem());
+                String sortOrderStr = String.valueOf(sortSpinner.getSelectedItem());
+
+                if(sortOrderStr.equalsIgnoreCase("oldest")){
+                    sortOrderNewest = false;
+                } else{
+                    sortOrderNewest = true;
+                }
 //                        Toast.makeText(view.getContext(), String.valueOf(sortSpinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -124,6 +146,17 @@ public class FilterDialog extends DialogFragment {
         });
     }
 
+    private void setTheCategories(final View filterView) {
+        if (((CheckBox) filterView.findViewById(R.id.cb_arts)).isEnabled()) {
+            categories.add("arts");
+        }
+        if (((CheckBox) filterView.findViewById(R.id.cb_fashion)).isEnabled()) {
+            categories.add("fashion");
+        }
+        if (((CheckBox) filterView.findViewById(R.id.cb_sport)).isEnabled()) {
+            categories.add("sport");
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -135,7 +168,29 @@ public class FilterDialog extends DialogFragment {
         setTheDateFrom(filterView);
         setTheDateTo(filterView);
         setSortSpinner(filterView);
+        setTheCategories(filterView);
 
+        save = (Button) filterView.findViewById(R.id.btn_save);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String dateFrom = date_from.getText().toString();
+                String dateTo = date_to.getText().toString();
+
+                Filter filter = new Filter();
+                filter.setDateFrom(dateFrom);
+                filter.setDateTo(dateTo);
+                filter.setSortNewest(sortOrderNewest);
+                filter.setCategories(categories);
+
+                // basically to sent the data to the activity set the interface
+                filterDialogListener.onFinishFilterDialogDialog(filter);
+                dismiss();
+
+            }
+        });
         return filterView;
     }
 

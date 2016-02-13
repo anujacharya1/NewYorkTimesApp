@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:text="@string/Arts"
         android:id="@+id/cb_arts"
-        android:checked="true"
+        android:checked="false"
         android:layout_alignTop="@+id/category_txt"
         android:layout_alignLeft="@+id/sort_spinner"
         android:layout_alignStart="@+id/sort_spinner" />
@@ -139,57 +139,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        android:id="@+id/button"
+        android:id="@+id/btn_save"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
-    <!--
-
-
-
-
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Arts"
-        android:id="@+id/checkBox"
-        android:checked="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fashion"
-        android:id="@+id/checkBox2"
-        android:layout_below="@+id/checkBox"
-        android:layout_alignLeft="@+id/checkBox"
-        android:layout_alignStart="@+id/checkBox"
-        android:checked="false" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sports"
-        android:id="@+id/checkBox3"
-        android:layout_below="@+id/checkBox2"
-        android:layout_alignLeft="@+id/checkBox2"
-        android:layout_alignStart="@+id/checkBox2"
-        android:checked="false" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:spinnerMode="dropdown"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/et_date_to"
-        android:layout_toRightOf="@+id/date_from"
-        android:layout_toEndOf="@+id/date_from" />
-
--->
-
 
 </RelativeLayout>

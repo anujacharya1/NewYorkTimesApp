@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -31,6 +33,7 @@ import com.newsapp.adapter.EndlessRecyclerViewScrollListener;
 import com.newsapp.adapter.NewsAdapter;
 import com.newsapp.dialogs.FilterDialog;
 import com.newsapp.impl.NewYorkTimesImpl;
+import com.newsapp.model.Filter;
 import com.newsapp.model.News;
 import com.newsapp.R;
 
@@ -44,6 +47,14 @@ public class NewsActivity extends AppCompatActivity{
     // Recycler View components
     private RecyclerView mRecyclerView;
     NewsAdapter newsAdapter;
+
+
+    //store the value on this for filtering the result
+    // this are the default and will be overriden by the dialog framgment
+    String dateFrom = "";
+    String dateTo = "";
+    Boolean sortNewest = Boolean.TRUE;
+    List<String> categories = Arrays.asList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +86,7 @@ public class NewsActivity extends AppCompatActivity{
         newsList = new ArrayList<>();
         newsAdapter = new NewsAdapter(newsList);
 
+        //end less scroller
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
@@ -141,19 +153,6 @@ public class NewsActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        switch (item.getItemId()) {
-//            // This is the up button
-//            case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(this);
-//                // overridePendingTransition(R.animator.anim_left, R.animator.anim_right);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-
 
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -164,7 +163,27 @@ public class NewsActivity extends AppCompatActivity{
                 //show the dialog framgment
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction ft = manager.beginTransaction();
-                DialogFragment newFragment = FilterDialog.newInstance();
+
+
+                // get the value from the dialog
+                DialogFragment newFragment = FilterDialog.newInstance(new FilterDialog.FilterDialogListener() {
+                    @Override
+                    public void onFinishFilterDialogDialog(Filter filterDialogResponse) {
+
+                        dateFrom = filterDialogResponse.getDateFrom();
+                        dateTo  = filterDialogResponse.getDateTo();
+                        sortNewest = filterDialogResponse.getSortNewest();
+                        categories = filterDialogResponse.getCategories();
+
+                        Log.i("INFO", "got the response form the filter dialog = "+filterDialogResponse);
+
+
+                        //also call the network call to refresh the content
+
+
+                    }
+                });
+
                 newFragment.show(ft, "FILTER_DIALOG");
 
 
