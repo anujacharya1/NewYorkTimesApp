@@ -16,6 +16,9 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.newsapp.R;
+import com.newsapp.model.News;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,8 +39,7 @@ public class NewsArticleWebViewActivity extends AppCompatActivity {
         //share button
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_news, menu);
-
+        inflater.inflate(R.menu.menu_webview, menu);
 
         MenuItem item = menu.findItem(R.id.menu_item_share);
         ShareActionProvider miShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
@@ -63,24 +65,26 @@ public class NewsArticleWebViewActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        String webUrl = getIntent().getStringExtra("webUrl");
 
+        News news = (News) Parcels.unwrap(getIntent().getParcelableExtra("news"));
 
-        //Add progress bar for webview
+        String webUrl = news.getWebUrl();
+
+        myToolbar.setTitle(news.getSectionName());
+        setSupportActionBar(myToolbar);
+
         myWebView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress)
-            {
-                if(progress < 100 && progressBar.getVisibility() == ProgressBar.GONE){
+            public void onProgressChanged(WebView view, int progress) {
+                if (progress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
                     progressBar.setVisibility(ProgressBar.VISIBLE);
                 }
                 progressBar.setProgress(progress);
-                if(progress == 100) {
+                if (progress == 100) {
                     progressBar.setVisibility(ProgressBar.GONE);
                 }
             }
         });
 
-        //Make webview stay in app rather than launching browser
         myWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -90,31 +94,9 @@ public class NewsArticleWebViewActivity extends AppCompatActivity {
 
         });
 
-        //Load article URL
         myWebView.loadUrl(webUrl);
-
-
-//
-//        myWebView = (WebView) findViewById(R.id.newsArticleWebview);
-//        // Configure related browser settings
-//        myWebView.getSettings().setLoadsImagesAutomatically(true);
-//        myWebView.getSettings().setJavaScriptEnabled(true);
-//        myWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        // Configure the client to use when opening URLs
-//        myWebView.setWebViewClient(new MyBrowser());
-//        myWebView.loadUrl(webUrl);
-
-
     }
 
-//    // Manages the behavior when URLs are loaded
-//    private class MyBrowser extends WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadUrl(url);
-//            return true;
-//        }
-//    }
 
     public void onSubmit(View v) {
         // closes the activity and returns to first screen

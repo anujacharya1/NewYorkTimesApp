@@ -2,14 +2,18 @@ package com.newsapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by anujacharya on 2/8/16.
  */
-public class News implements Serializable{
+@Parcel
+public class News{
 
+    @SerializedName("headline")
     Headline headline;
 
     @SerializedName("multimedia")
@@ -20,6 +24,9 @@ public class News implements Serializable{
 
     @SerializedName("pub_date")
     String pubDate;
+
+    @SerializedName("section_name")
+    String sectionName;
 
     @SerializedName("web_url")
     String webUrl;
@@ -64,6 +71,14 @@ public class News implements Serializable{
         this.multimedia = multimedia;
     }
 
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
+
     @Override
     public String toString() {
         return "News{" +
@@ -71,6 +86,7 @@ public class News implements Serializable{
                 ", multimedia=" + multimedia +
                 ", leadParagraph='" + leadParagraph + '\'' +
                 ", pubDate='" + pubDate + '\'' +
+                ", sectionName='" + sectionName + '\'' +
                 ", webUrl='" + webUrl + '\'' +
                 '}';
     }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.newsapp.model.Multimedia;
 import com.newsapp.model.News;
 
@@ -158,7 +159,7 @@ public class NewsAdapter extends
             }
         }
 
-        Picasso.with(context)
+        Glide.with(context)
                 .load(thumbnail != null ? thumbnail.getUrl() : "")
                 .into(vh2.getImgView());
     }
@@ -178,8 +179,7 @@ public class NewsAdapter extends
     public class NewsAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    TO
-
+    TO existing
 
      */
 
