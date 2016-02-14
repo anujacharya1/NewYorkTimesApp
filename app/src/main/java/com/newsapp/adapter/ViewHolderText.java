@@ -9,7 +9,7 @@ import com.newsapp.R;
 /**
  * Created by anujacharya on 2/12/16.
  */
-public class ViewHolderText extends RecyclerView.ViewHolder {
+public class ViewHolderText extends NewsAdapter.ViewHolder {
     private TextView label1;
     private TextView descriptionAlone;
 

@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
  * Created by anujacharya on 2/10/16.
  */
 public class NewsAdapter extends
-        RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> newsList;
 
@@ -35,7 +35,6 @@ public class NewsAdapter extends
     // Pass in the contact array into the constructor
     public NewsAdapter(List<News> newsList) {
         this.newsList = newsList;
-
     }
 
     @Override
@@ -63,9 +62,9 @@ public class NewsAdapter extends
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        RecyclerView.ViewHolder viewHolder;
+        NewsAdapter.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
@@ -85,9 +84,8 @@ public class NewsAdapter extends
         return viewHolder;
     }
 
-    // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case TEXT:
                 ViewHolderText vh1 = (ViewHolderText) viewHolder;
@@ -172,5 +170,42 @@ public class NewsAdapter extends
     }
 
 
+    /*
 
+    The below portion took very long time for me to figure out. First I have to change the signature
+
+    FROM
+    public class NewsAdapter extends
+        RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    TO
+
+
+     */
+
+    // Define listener member variable
+    private static OnItemClickListener listener;
+    // Define the listener interface
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(final View itemView) {
+            super(itemView);
+            // Setup the click listener
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null)
+                        listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
+        }
+    }
 }

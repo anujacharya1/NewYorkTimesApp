@@ -1,5 +1,6 @@
 package com.newsapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -91,6 +94,17 @@ public class NewsActivity extends AppCompatActivity{
             }
         });
         mRecyclerView.setAdapter(newsAdapter);
+
+        newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String webUrl = newsList.get(position).getWebUrl();
+
+                Intent i =  new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
+                i.putExtra("webUrl", webUrl);
+                startActivity(i);
+            }
+        });
     }
 
     // Append more data into the adapter

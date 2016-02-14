@@ -10,7 +10,7 @@ import com.newsapp.R;
 /**
  * Created by anujacharya on 2/12/16.
  */
-public class ViewHolderImgText extends RecyclerView.ViewHolder {
+public class ViewHolderImgText extends NewsAdapter.ViewHolder {
 
     private ImageView imgView;
     private TextView textView;
