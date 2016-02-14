@@ -1,6 +1,9 @@
 package com.newsapp.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -67,6 +71,11 @@ public class NewsActivity extends AppCompatActivity{
         myToolbar.setLogo(R.drawable.nwslogo);
         myToolbar.setBackgroundColor(getResources().getColor(R.color.colorGrey));
         setupTheView();
+
+
+        if(!isNetworkAvailable() || !isOnline()){
+            Toast.makeText(this, "INTERNET NOT AVAIALBLE", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupTheView(){
@@ -100,11 +109,13 @@ public class NewsActivity extends AppCompatActivity{
             public void onItemClick(View view, int position) {
                 String webUrl = newsList.get(position).getWebUrl();
 
-                Intent i =  new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
+                Intent i = new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
                 i.putExtra("webUrl", webUrl);
                 startActivity(i);
             }
         });
+
+
     }
 
     // Append more data into the adapter
@@ -237,5 +248,25 @@ public class NewsActivity extends AppCompatActivity{
         List<News> newsList =  gson.fromJson(docs, newsType);
         return newsList;
     }
+
+
+    private Boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+        return false;
+    }
+
 
 }
