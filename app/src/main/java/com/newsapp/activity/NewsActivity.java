@@ -45,7 +45,6 @@ import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
 
-
 public class NewsActivity extends AppCompatActivity{
 
     List<News> newsList;
@@ -97,8 +96,11 @@ public class NewsActivity extends AppCompatActivity{
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int pageList, int totalItemsCount) {
-                page = pageList;
-                customLoadMoreDataFromApi(page);
+                if (page != pageList) {
+                    page = pageList;
+                    customLoadMoreDataFromApi(page);
+                }
+
             }
         });
         mRecyclerView.setAdapter(newsAdapter);
@@ -154,6 +156,10 @@ public class NewsActivity extends AppCompatActivity{
 
                 }
                 filter.setQuery(query);
+
+                //TODO Calling from serch should I remove the before content should I remove before content ?
+                clearTheNewsAdapterContent();
+
                 customLoadMoreDataFromApi(page);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
@@ -169,6 +175,15 @@ public class NewsActivity extends AppCompatActivity{
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    // call this before the serach query and after the filter applied
+    // change the page to zero
+    private void clearTheNewsAdapterContent(){
+
+        int size = newsAdapter.getItemCount();
+        newsList.clear();
+        newsAdapter.notifyItemRangeRemoved(0, size);
     }
 
     @Override
@@ -213,6 +228,12 @@ public class NewsActivity extends AppCompatActivity{
 
                         //only call the api if the query is present
                         // use case where the person is going to set the filter first without query
+
+                        // remove the previous content and use the query if provided before with this filter
+
+                        clearTheNewsAdapterContent();
+
+                        //TODO Calling from filter should I remove before content ?
                         customLoadMoreDataFromApi(page);
 
 
@@ -246,7 +267,6 @@ public class NewsActivity extends AppCompatActivity{
         return newsList;
     }
 
-
     private Boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -264,6 +284,5 @@ public class NewsActivity extends AppCompatActivity{
         catch (InterruptedException e) { e.printStackTrace(); }
         return false;
     }
-
 
 }
