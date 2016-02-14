@@ -13,18 +13,19 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -41,7 +42,6 @@ import com.newsapp.impl.NewYorkTimesImpl;
 import com.newsapp.model.Filter;
 import com.newsapp.model.News;
 import com.newsapp.R;
-import com.newsapp.utils.NewsAppUtil;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -53,6 +53,8 @@ public class NewsActivity extends AppCompatActivity{
     // Recycler View components
     private RecyclerView mRecyclerView;
     NewsAdapter newsAdapter;
+    private ShareActionProvider miShareAction;
+
 
     //store the value on this for filtering the result
     // this are the default and will be overriden by the dialog framgment
@@ -170,6 +172,7 @@ public class NewsActivity extends AppCompatActivity{
                 return false;
             }
         });
+
         return super.onCreateOptionsMenu(menu);
     }
 
