@@ -183,29 +183,29 @@ public class NewsAdapter extends
 
      */
 
-    // Define listener member variable
-    private static OnItemClickListener listener;
-    // Define the listener interface
-    public interface OnItemClickListener {
-        void onItemClick(View itemView, int position);
-    }
-    // Define the method that allows the parent activity or fragment to define the listener
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
+//    // Define listener member variable
+//    private static OnItemClickListener listener;
+//    // Define the listener interface
+//    public interface OnItemClickListener {
+//        void onItemClick(View itemView, int position);
+//    }
+//    // Define the method that allows the parent activity or fragment to define the listener
+//    public void setOnItemClickListener(OnItemClickListener listener) {
+//        this.listener = listener;
+//    }
+//
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(final View itemView) {
             super(itemView);
-            // Setup the click listener
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Triggers click upwards to the adapter on click
-                    if (listener != null)
-                        listener.onItemClick(itemView, getLayoutPosition());
-                }
-            });
+//            // Setup the click listener
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // Triggers click upwards to the adapter on click
+//                    if (listener != null)
+//                        listener.onItemClick(itemView, getLayoutPosition());
+//                }
+//            });
         }
     }
 }

@@ -35,6 +35,7 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.newsapp.adapter.EndlessRecyclerViewScrollListener;
 import com.newsapp.adapter.NewsAdapter;
+import com.newsapp.adapter.RecyclerItemClickListener;
 import com.newsapp.dialogs.FilterDialog;
 import com.newsapp.impl.NewYorkTimesImpl;
 import com.newsapp.model.Filter;
@@ -45,7 +46,7 @@ import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NewsActivity extends AppCompatActivity{
+public class NewsActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
     List<News> newsList;
 
@@ -93,28 +94,30 @@ public class NewsActivity extends AppCompatActivity{
         newsAdapter = new NewsAdapter(newsList);
 
         //end less scroller
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int pageList, int totalItemsCount) {
-                if (page != pageList) {
-                    page = pageList;
-                    customLoadMoreDataFromApi(page);
+    mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+        @Override
+        public void onLoadMore(int pageList, int totalItemsCount) {
+            if (page != pageList) {
+                page = pageList;
+                customLoadMoreDataFromApi(page);
                 }
 
-            }
+        }
         });
         mRecyclerView.setAdapter(newsAdapter);
 
-        newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                News news = newsList.get(position);
+//        newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                News news = newsList.get(position);
+//
+//                Intent i = new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
+//                i.putExtra("news", Parcels.wrap(news));
+//                startActivity(i);
+//            }
+//        });
 
-                Intent i = new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
-                i.putExtra("news", Parcels.wrap(news));
-                startActivity(i);
-            }
-        });
+
     }
 
     // Append more data into the adapter
@@ -285,4 +288,17 @@ public class NewsActivity extends AppCompatActivity{
         return false;
     }
 
+    @Override
+    public void onItemClick(View childView, int position) {
+        News news = newsList.get(position);
+
+        Intent i = new Intent(NewsActivity.this, NewsArticleWebViewActivity.class);
+        i.putExtra("news", Parcels.wrap(news));
+        startActivity(i);
+    }
+
+    @Override
+    public void onItemLongPress(View childView, int position) {
+
+    }
 }
