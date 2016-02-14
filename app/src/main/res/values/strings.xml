@@ -13,6 +13,10 @@
 
 
     <string name="sort_prompt">Sort Order</string>
+    <string name="descriptionAlone">description</string>
+    <string name="headlineAlone">headlineAlone</string>
+    <string name="description">description</string>
+    <string name="headline">headline</string>
 
     <string-array name="sort_arrays">
         <item>Oldest</item>

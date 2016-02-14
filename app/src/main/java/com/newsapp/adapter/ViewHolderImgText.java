@@ -14,11 +14,14 @@ public class ViewHolderImgText extends RecyclerView.ViewHolder {
 
     private ImageView imgView;
     private TextView textView;
+    private TextView description;
 
     public ViewHolderImgText(View v) {
         super(v);
         imgView = (ImageView) v.findViewById(R.id.newsArticleImg);
-        textView = (TextView) v.findViewById(R.id.newsArticleText);
+        textView = (TextView) v.findViewById(R.id.headline);
+        description = (TextView) v.findViewById(R.id.description);
+
     }
 
     public ImageView getImgView() {
@@ -35,5 +38,13 @@ public class ViewHolderImgText extends RecyclerView.ViewHolder {
 
     public void setTextView(TextView textView) {
         this.textView = textView;
+    }
+
+    public TextView getDescription() {
+        return description;
+    }
+
+    public void setDescription(TextView description) {
+        this.description = description;
     }
 }

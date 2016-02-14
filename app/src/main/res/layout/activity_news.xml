@@ -8,7 +8,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#f0f8ff"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
@@ -17,7 +17,7 @@
         android:id="@+id/nwsRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ECEFF1"
-        />
+        android:background="#FFFFFF"
+        android:layout_below="@+id/my_toolbar" />
 
 </RelativeLayout>

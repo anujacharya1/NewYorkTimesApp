@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -109,7 +110,6 @@ public class NewsActivity extends AppCompatActivity{
                 newsList.addAll(newsListLocal);
                 int curSize = newsAdapter.getItemCount();
                 newsAdapter.notifyItemRangeInserted(curSize, newsList.size() - 1);
-
             }
         });
         // For efficiency purposes, notify the adapter of only the elements that got changed

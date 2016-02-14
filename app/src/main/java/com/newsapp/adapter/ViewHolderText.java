@@ -11,11 +11,12 @@ import com.newsapp.R;
  */
 public class ViewHolderText extends RecyclerView.ViewHolder {
     private TextView label1;
-
+    private TextView descriptionAlone;
 
     public ViewHolderText(View v) {
         super(v);
-        label1 = (TextView) v.findViewById(R.id.newsArticleTextAlone);
+        label1 = (TextView) v.findViewById(R.id.headlineAlone);
+        descriptionAlone = (TextView) v.findViewById(R.id.descriptionAlone);
     }
 
     public TextView getLabel1() {
@@ -26,4 +27,11 @@ public class ViewHolderText extends RecyclerView.ViewHolder {
         this.label1 = label1;
     }
 
+    public TextView getDescriptionAlone() {
+        return descriptionAlone;
+    }
+
+    public void setDescriptionAlone(TextView descriptionAlone) {
+        this.descriptionAlone = descriptionAlone;
+    }
 }

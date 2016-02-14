@@ -2,6 +2,8 @@ package com.newsapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ public class NewsAdapter extends
     private List<News> newsList;
 
     private Context context;
+
+    private int MAX_CHAR_HEADLINE = 60;
+    private int MAX_CHAR_DESC = 30;
 
     private final int TEXT = 0, IMG = 1;
 
@@ -99,17 +104,51 @@ public class NewsAdapter extends
         }
     }
 
+    private String splitStringHeadline(String inputString){
+        int maxLength = (inputString.length() < MAX_CHAR_HEADLINE)?inputString.length():MAX_CHAR_HEADLINE;
+        inputString = inputString.substring(0, maxLength);
+        return inputString;
+    }
+
+    private String splitStringDesc(String inputString){
+        int maxLength = (inputString.length() < MAX_CHAR_DESC)?inputString.length():MAX_CHAR_DESC;
+        inputString = inputString.substring(0, maxLength);
+        return inputString;
+    }
+
     private void configureViewHolder1(ViewHolderText vh1, int position) {
         News news = newsList.get(position);
         if (news != null) {
-            vh1.getLabel1().setText(news.getHeadline().getMain());
+
+            String headline = news.getHeadline().getMain();
+            headline = splitStringHeadline(headline);
+            headline+="...";
+
+            vh1.getLabel1().setText(Html.fromHtml("<b><font size='1' color='#236B8E'>" + headline + "</font></b>"));
+
+            if(news.getLeadParagraph()!=null){
+                String description = splitStringDesc(news.getLeadParagraph());
+                description+="...";
+                vh1.getDescriptionAlone().setText(description);
+            }
         }
     }
 
     private void configureViewHolder2(ViewHolderImgText vh2, int position) {
         News news = newsList.get(position);
 
-        vh2.getTextView().setText(news.getHeadline().getMain());
+
+        String headline = news.getHeadline().getMain();
+        headline = splitStringHeadline(headline);
+        headline+="...";
+
+        vh2.getTextView().setText(Html.fromHtml("<b><font size='1' color='#236B8E'>" + headline + "</font></b>"));
+
+        if(news.getLeadParagraph()!=null){
+            String description = splitStringDesc(news.getLeadParagraph());
+            description+="...";
+            vh2.getDescription().setText(description);
+        }
 
         List<Multimedia> multimedias = news.getMultimedia();
 
@@ -122,8 +161,7 @@ public class NewsAdapter extends
         }
 
         Picasso.with(context)
-                .load(thumbnail!=null?thumbnail.getUrl():"")
-                .resize(600, 400)
+                .load(thumbnail != null ? thumbnail.getUrl() : "")
                 .into(vh2.getImgView());
     }
 

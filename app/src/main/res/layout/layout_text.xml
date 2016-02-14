@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_margin="2dp"
+    android:layout_margin="1dp"
     android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/headlineAlone"
+        android:background="#cedbd9"
+        android:id="@+id/headlineAlone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:background="#FFFFFF"
-        android:id="@+id/newsArticleTextAlone"
+        android:text="@string/descriptionAlone"
+        android:id="@+id/descriptionAlone"
+        android:layout_below="@+id/headlineAlone"
+        android:background="#cedbd9"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/headlineAlone"
+        android:layout_alignEnd="@+id/headlineAlone" />
 
 
-</LinearLayout>
+</RelativeLayout>
